@@ -8,12 +8,12 @@ Sub homework()
     For Each WS In Worksheets
 
         
+        'Re-running creates several columns. To avoid that, delete te columns that are created in the last run
+        WS.Columns(9).EntireColumn.Delete
+        WS.Columns(9).EntireColumn.Delete
+        WS.Columns(9).EntireColumn.Delete
+        WS.Columns(9).EntireColumn.Delete
         
-        WS.Columns(9).EntireColumn.Delete
-        WS.Columns(9).EntireColumn.Delete
-        WS.Columns(9).EntireColumn.Delete
-        WS.Columns(9).EntireColumn.Delete
-        ' Created a Variable to Hold File Name, Last Row, Last Column, and Year
         Dim WorksheetName As String
         Dim change As Double
         Dim symbNum As Long
@@ -24,17 +24,17 @@ Sub homework()
         
         
         
-       ' Dim total As Integer
+  
         Total = 0
         change = 0
         symbNum = 2
         ' Determine the Last Row
         LastRow = WS.Cells(Rows.Count, 1).End(xlUp).Row
-        ' Determine the Last Column Number
+        
         LastColumn = 2 + WS.Cells(1, Columns.Count).End(xlToLeft).Column
-                ' Grabbed the WorksheetName
+        
         WorksheetName = WS.Name
-        ' MsgBox WorksheetName
+     
         
 
         ' Add the Header
@@ -43,31 +43,31 @@ Sub homework()
         WS.Cells(1, LastColumn + 2).Value = "Percentage Change"
         WS.Cells(1, LastColumn + 3).Value = "TOTAL STOCK VOLUME"
         
-        'Range(LastColumn&"1:"&(LastColumn-4)&LastRow).Clear
+    
        tempChange = 0
        isFirst = 0
        sum = 0
-       'open=0
+       
     
-        For i = 2 To LastRow
+        For i = 2 To LastRow ' traverse all rows
                 If isFirst = 0 Then
                 
-                        isFirst = Cells(i, 3).Value
+                        isFirst = Cells(i, 3).Value 'take first value of each ticker brand
                         End If
                         
-               If Cells(i + 1, 1).Value <> Cells(i, 1).Value Then
+               If Cells(i + 1, 1).Value <> Cells(i, 1).Value Then 'check if the new brand starts
                   
                      
-                     last = WS.Cells(i, 6).Value
-                     WS.Cells(symbNum, LastColumn).Value = WS.Cells(i, 1).Value
-                     WS.Cells(symbNum, LastColumn + 1).Value = last - isFirst
+                     last = WS.Cells(i, 6).Value 'last value of current ticker
+                     WS.Cells(symbNum, LastColumn).Value = WS.Cells(i, 1).Value 'store ticker name in row
+                     WS.Cells(symbNum, LastColumn + 1).Value = last - isFirst 'yearly change
                      If isFirst = 0 Then
-                        WS.Cells(symbNum, LastColumn + 2).Value = last
+                        WS.Cells(symbNum, LastColumn + 2).Value = last 'avoid divide by 0
                      Else
                         WS.Cells(symbNum, LastColumn + 2).Value = ((last - isFirst) * 100) / isFirst
                      End If
                      
-                     WS.Cells(symbNum, LastColumn + 3).Value = sum + WS.Cells(i, 7).Value
+                     WS.Cells(symbNum, LastColumn + 3).Value = sum + WS.Cells(i, 7).Value 'all the volumes
                      
                      symbNum = symbNum + 1
                      isFirst = 0
@@ -75,7 +75,7 @@ Sub homework()
                      
                      
                Else
-                      'change = change + Range("D" & i).Value - Range("F" & i).Value
+                      
                       sum = sum + WS.Cells(i, 7).Value
                       
                       
