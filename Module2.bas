@@ -12,6 +12,8 @@ Sub extras()
         Min = WS.Cells(2, 11).Value
         
         Name = WS.Name
+        gvolTicker = ""
+        gVol = 0
 
 
         For i = 2 To LastRow
@@ -21,6 +23,12 @@ Sub extras()
                 maxRow = i
                 maxTicker = WS.Range("I" & i).Value
                 maxVol = WS.Range("L" & i).Value
+            End If
+            If WS.Cells(i, 11).Value > gVol Then
+            
+                maxRow = i
+                gvolTicker = WS.Range("I" & i).Value
+                gVol = WS.Range("L" & i).Value
             End If
             
             If WS.Cells(i, 11).Value < Min Then
@@ -46,6 +54,10 @@ Sub extras()
             WS.Range("O4").Value = minTicker
             WS.Range("P4").Value = Min
             WS.Range("Q4").Value = minVol
+            
+            WS.Range("N5").Value = "Greatest Total Volume: "
+            WS.Range("O5").Value = gvolTicker
+            WS.Range("Q5").Value = gVol
             
     Next WS
 End Sub
